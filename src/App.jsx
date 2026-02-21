@@ -28,13 +28,13 @@ function App() {
       
         <h1>Create Todo List</h1>
         <fieldset>
-          <legend></legend>
+          
        
         <input style={{ fontSize: "2em", fieldSizing: 'content' }}
           onChange={handleStepSize}
-          type="text" name="" id="" />
+          type="text"/>
           <button type='submit'>Add Task</button>
-      </fieldset>
+     <br />
 
       <ActionButton dispatch={dispatch} payload={step} type={"increment"}>
         <h2>+</h2></ActionButton>
@@ -42,8 +42,8 @@ function App() {
       <ActionButton dispatch={dispatch} payload={step} type={"decrement"}>
         <h2>-</h2></ActionButton>
       <br />
-      <ActionButton><h2>Reset</h2></ActionButton>
-
+      <ActionButton dispatch={dispatch} paylaod={step} type={"reset"}><h2>Reset</h2></ActionButton>
+ </fieldset>
     </>
   );
 }
