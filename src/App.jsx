@@ -160,20 +160,20 @@ const Todos = () => {
       <input style={{ fontSize: "2em"}}
         onChange={handleTask}
         type="text" placeholder="Add Task"/>
-      <button type='submit'>Add Task</button>
+     <ActionButton dispatch={dispatch} payload={task} type={"addTask"}>
+          <h2>Add</h2></ActionButton>
 
 
 {todos.map(todo => <li key={todo.id}>{todo.title}</li>)}
         <br />
 
-        <ActionButton dispatch={dispatch} payload={task} type={"addTask"}>
-          <h2>Add</h2></ActionButton>
-        {/* <h1>{state.count}</h1>
+       
+        
         <ActionButton dispatch={dispatch} payload={task} type={"deleteTask"}>
           <h2>Delete</h2></ActionButton>
         <br />
         <ActionButton dispatch={dispatch} paylaod={task} type={"updateTask"}>
-          <h2>Update</h2></ActionButton> */} 
+          <h2>Update</h2></ActionButton> 
       
     </>
   );
