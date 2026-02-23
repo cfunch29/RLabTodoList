@@ -1,5 +1,5 @@
 import { useReducer, useState } from 'react';
-import ActionButton from './components/ActionButton';
+// import ActionButton from './components/ActionButton';
 import './App.css';
 
 const initialState = [
@@ -139,75 +139,118 @@ const Todos = () => {
   const [todos, dispatch] = useReducer(reducer, initialState);
   const [task, setTask] = useState("");
   const [editingId, setEditingId] = useState(null);
+  const [editText, setEditText] = useState("");
 
-  function handleTask(e) {
-    setTask(e.target.value);
-  }
-
-  function handleSubmit() {
-    if (editingId) {
-      dispatch({
-        type: "editTask",
-        paylaod: { id: editingId, title: task }
-      });
-      setEditingId(null);
-    } else {
-      dispatch({
-        type: "addTask",
-        paylaod: task
-      });
-    }
+  function handleAdd() {
+    if (!task) return;
+    dispatch({ type: "addTask", payload: task });
     setTask("");
   }
+
+  function handleSave(todoId) {
+    dispatch({ type: "editTask", payload: { id: todoId, title: editText } });
+    setEditingId(null);
+    setEditText("");
+  }
+
+  // function handleTask(e) {
+  //   setTask(e.target.value);
+  // }
+
+  // function handleSubmit() {
+  //   if (editingId) {
+  //     dispatch({
+  //       type: "editTask",
+  //       payload: { id: editingId, title: task }
+  //     });
+  //     setEditingId(null);
+  //   } else {
+  //     dispatch({
+  //       type: "addTask",
+  //       payload: task
+  //     });
+  //   }
+  //   setTask("");
+  // }
   return (
     <>
-      <h1>Create Todo List {todos.length}</h1>
+      <h1>Create Todo List ({todos.length})</h1>
       <br />
       <input
         style={{ fontSize: "2em" }}
         value={task}
-        onChange={handleTask}
-        type="text"
+        onChange={e => setTask(e.target.value)}
         placeholder="Add Task"
       />
-      <button onClick={handleSubmit}>
-        {editingId ? "Update" : "Add"}
+      <button onClick={handleAdd}>Add
+        {/* {editingId ? "Update" : "Add"} */}
       </button>
 
-<fieldset>
+
       <ul>
-        {todos.map(todo => (
+        {todos.map((todo) => (
           <li key={todo.id}
-            style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+            style={{ display: "flex", 
+            gap: "10px", 
+            alignItems: "center" }}>
 
             <input
               type="checkbox"
               checked={todo.completed}
               onChange={() =>
                 dispatch({ type: "toggleComplete", payload: todo.id })
-              } />
-            <span
-              style={{
-                cursor: "pointer",
-                textDecoration: todo.completed ? "line-through" : "none"
-              }}
-            >
-              {todo.title}
-            </span>
-            <ActionButton dispatch={dispatch} 
-            action={{ type: "deleteTask", payload: todo.id }}>
-              Delete</ActionButton>
+              }
+            />
 
-            <button onClick={() => {
-              setTask(todo.title);
-            setEditingId(todo.id);
-            }}
-            >Edit</button>
-          </li>
+            {editingId === todo.id ? (
+              <>
+                <input value={editText}
+                  onChange={e => setEditText(e.target.value)}
+                  style={{ flex: 1 }} />
+                <button onClick={() => handleSave(todo.id)}>
+                  Save</button>
+              </>
+            ) : (
+              <>
+                <span
+                  style={{
+                    cursor: "pointer",
+                    textDecoration: todo.completed ? "line-through" : "none"
+                  }}
+                >
+                  {todo.title}
+                </span>
+
+                {/* edit button */}
+                <button
+                  onClick={() => {
+                    setEditingId(todo.id);
+                    setEditText(todo.title);
+                  }}
+                >Edit</button>
+
+                <button
+                  onClick={() => {
+                    if (window.confirm(`Are you sure you want to delete "${todo.title}"?`)) {
+                      dispatch({ type: "deleteTask", payload: todo.id });
+                    }
+                  }}
+                  disabled={!todo.completed}>
+                  Delete
+                </button>
+              </>
+
+            )}
+                </li>
         ))}
-      </ul>
-      </fieldset>
-      <br />
+              {/* <ActionButton dispatch={dispatch}
+                    action={{ type: "deleteTask", payload: todo.id }}>
+                    Delete</ActionButton> */}
+
+
+            </ul>
+
+
       {/* resets to default todo list */}
       <button onClick={() => dispatch({ type: "resetTodos", payload: initialState })}>
         Reset</button>
@@ -215,6 +258,6 @@ const Todos = () => {
 
     </>
   );
-};
+}
 
 export default Todos
