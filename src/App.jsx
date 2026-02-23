@@ -106,7 +106,7 @@ function reducer(state, action) {
         {
           userId: 1,
           id: state.length ? state[state.length - 1].id + 1 : 1,
-          title: action.paylaod,
+          title: action.payload,
           completed: false
         },
         ...state
@@ -117,7 +117,7 @@ function reducer(state, action) {
 
     case 'toggleComplete':
       return state.map(todo =>
-        todo.id === action.paylaod
+        todo.id === action.payload
           ? { ...todo, completed: !todo.completed }
           : todo
       );
@@ -174,6 +174,7 @@ const Todos = () => {
         {editingId ? "Update" : "Add"}
       </button>
 
+<fieldset>
       <ul>
         {todos.map(todo => (
           <li key={todo.id}
@@ -183,7 +184,7 @@ const Todos = () => {
               type="checkbox"
               checked={todo.completed}
               onChange={() =>
-                dispatch({ type: "toggleComplete", paylaod: todo.id })
+                dispatch({ type: "toggleComplete", payload: todo.id })
               } />
             <span
               style={{
@@ -205,10 +206,9 @@ const Todos = () => {
           </li>
         ))}
       </ul>
+      </fieldset>
       <br />
-      <ActionButton dispatch={dispatch} payload={todos} type={"editTask"}>
-        Edit</ActionButton>
-      <br />
+      {/* resets to default todo list */}
       <button onClick={() => dispatch({ type: "resetTodos", payload: initialState })}>
         Reset</button>
       <br />
