@@ -185,8 +185,9 @@ const Todos = () => {
       <button onClick={handleAdd}>Add
         {/* {editingId ? "Update" : "Add"} */}
       </button>
-
-
+ <br />
+  <br />
+      <fieldset>
       <ul>
         {todos.map((todo) => (
           <li key={todo.id}
@@ -249,12 +250,13 @@ const Todos = () => {
 
 
             </ul>
-
-
+   
+</fieldset>
+ <br />
       {/* resets to default todo list */}
       <button onClick={() => dispatch({ type: "resetTodos", payload: initialState })}>
         Reset</button>
-      <br />
+  
 
     </>
   );
