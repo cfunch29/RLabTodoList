@@ -101,28 +101,28 @@ function reducer(state, action) {
     case 'addTask':
       return [
         ...state,
-      {
-        userId: 1,
-        id: state.length + 1,
-        title: action.paylaod,
-        completed: false
-      }
+        {
+          userId: 1,
+          id: state.length + 1,
+          title: action.paylaod,
+          completed: false
+        }
       ];
 
     case 'deleteTask':
       return state.filter(todo => todo.id !== action.payload);
 
     case 'toggleComplete':
-      return state.map(todo => 
+      return state.map(todo =>
         todo.id === action.paylaod
-        ? {...todo, completed: !todo.completed }
-        : todo
+          ? { ...todo, completed: !todo.completed }
+          : todo
       );
 
-      case 'editTask':
-      return state.map(todo => 
+    case 'editTask':
+      return state.map(todo =>
         todo.id === action.payload.id ?
-        {...todo, title: action.payload.title } : todo
+          { ...todo, title: action.payload.title } : todo
       );
 
     case 'resetTodos':
@@ -145,7 +145,7 @@ const Todos = () => {
     if (editingId) {
       dispatch({
         type: "editTask",
-        paylaod: { id: editingId, title: task}
+        paylaod: { id: editingId, title: task }
       });
       setEditingId(null);
     } else {
@@ -160,32 +160,48 @@ const Todos = () => {
     <>
       <h1>Create Todo List {todos.length}</h1>
       <br />
-      <input 
-      style={{ fontSize: "2em" }}
-      value={task}
+      <input
+        style={{ fontSize: "2em" }}
+        value={task}
         onChange={handleTask}
-        type="text" 
-        placeholder="Add Task" 
-        />
+        type="text"
+        placeholder="Add Task"
+      />
       <button onClick={handleSubmit}>
         {editingId ? "Update" : "Add"}
       </button>
 
+      <ul>
+        {todos.map(todo => (
+          <li key={todo.id}
+            style={{ display: "flex", gap: "10px", alignItems: "center" }}>
 
-      {todos.map(todo => (
-        <li key={todo.id}>{todo.title}
-
-      <ActionButton dispatch={dispatch} action={{type: "deleteTask", payload: todo.id }}>
-       Delete</ActionButton>
-       </li>
-       ))}
+            <input
+              type="checkbox"
+              checked={todo.completed}
+              onChange={() =>
+                dispatch({ type: "toggleComplete", paylaod: todo.id })
+              } />
+            <span
+              style={{
+                cursor: "pointer",
+                textDecoration: todo.completed ? "line-through" : "none"
+              }}
+            >
+              {todo.title}
+            </span>
+            <ActionButton dispatch={dispatch} action={{ type: "deleteTask", payload: todo.id }}>
+              Delete</ActionButton>
+          </li>
+        ))}
+      </ul>
       <br />
-       <ActionButton dispatch={dispatch} payload={todos} type={"editTask"}>
+      <ActionButton dispatch={dispatch} payload={todos} type={"editTask"}>
         Edit</ActionButton>
-        <br />
+      <br />
       <button onClick={() => dispatch({ type: "resetTodos", payload: initialState })}>
-      Reset</button>
-<br />
+        Reset</button>
+      <br />
 
     </>
   );
