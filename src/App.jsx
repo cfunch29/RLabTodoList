@@ -97,24 +97,33 @@ const initialState = [
 
 // reducer function 
 function reducer(state, action) {
-
-  const todoList = state.map((todo) => {
-    return ()
-  })
   switch (action.type) {
     case 'addTask':
-      return [...state,
+      return [
+        ...state,
       {
+        userId: 1,
         id: state.length + 1,
-        title: action.paylaod
+        title: action.paylaod,
+        completed: false
       }
       ];
 
     case 'deleteTask':
-      return state.filter(del => del.id !== action.payload);
+      return state.filter(todo => todo.id !== action.payload);
+
+    case 'toggleComplete':
+      return state.map(todo => 
+        todo.id === action.paylaod
+        ? {...todo, completed: !todo.completed }
+        : todo
+      );
 
       case 'editTask':
-      return ;
+      return state.map(todo => 
+        todo.id === action.payload.id ?
+        {...todo, title: action.payload.title } : todo
+      );
 
     case 'resetTodos':
       return initialState;
