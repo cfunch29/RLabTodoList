@@ -5,4 +5,4 @@ export default function ActionButton({children, dispatch, payload, type}){
     }
     
     return <button onClick={handleClick}>{children}</button>
-}
+};

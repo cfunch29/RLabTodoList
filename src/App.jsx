@@ -127,50 +127,52 @@ const initialState = [
 
 // reducer function 
 function reducer(state, action) {
-   switch(action.type){
-      case 'addTask':
+  switch (action.type) {
+    case 'addTask': 
+    return [...state,
+      {
+        id: state.length + 1,
+        title: action.paylaod
+      }
+    ]
 
-      case 'deleteTask':
+    case 'deleteTask':
 
-      case 'updateTask':
+    case 'updateTask':
 
-      default: return state;
+    default: return state;
   }
 };
 
-const Todos = () =>  {
+const Todos = () => {
   const [todos, dispatch] = useReducer(reducer, initialState);
-const [task, setTask] = useState(1);
+  const [task, setTask] = useState(1);
 
   function handleTask(e) {
     setTask(e.target.value);
   }
   return (
     <>
-      
-        <h1>Create Todo List {todos.length}</h1>
-        Add New Task:
-        <input type="text" />
-        <fieldset>
-          
-       
-        <input style={{ fontSize: "2em", fieldSizing: 'content' }}
-          onChange={handleTask}
-          type="text"/>
-          <button type='submit'>Add Task</button>
-     <br />
+      <h1>Create Todo List {todos.length}</h1>
+      Add New Task:
+      <input style={{ fontSize: "2em", fieldSizing: 'content' }}
+        onChange={handleTask}
+        type="text" />
+      <button type='submit'>Add Task</button>
 
-      <ActionButton dispatch={dispatch} payload={task} type={"addTask"}>
-        <h2>Add</h2></ActionButton>
-      <h1>{state.count}</h1>
-      <ActionButton dispatch={dispatch} payload={task} type={"deleteTask"}>
-        <h2>Delete</h2></ActionButton>
-      <br />
-      <ActionButton dispatch={dispatch} paylaod={task} type={"updateTask"}>
-        <h2>Update</h2></ActionButton>
- </fieldset>
+        <br />
+
+        {/* <ActionButton dispatch={dispatch} payload={task} type={"addTask"}>
+          <h2>Add</h2></ActionButton>
+        <h1>{state.count}</h1>
+        <ActionButton dispatch={dispatch} payload={task} type={"deleteTask"}>
+          <h2>Delete</h2></ActionButton>
+        <br />
+        <ActionButton dispatch={dispatch} paylaod={task} type={"updateTask"}>
+          <h2>Update</h2></ActionButton> */}
+      
     </>
   );
-}
+};
 
 export default Todos
