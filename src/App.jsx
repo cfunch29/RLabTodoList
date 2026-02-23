@@ -162,10 +162,14 @@ const Todos = () => {
       <br />
       <input 
       style={{ fontSize: "2em" }}
+      value={task}
         onChange={handleTask}
-        type="text" placeholder="Add Task" />
-      <ActionButton dispatch={dispatch} payload={task} type={"addTask"}>
-        Add</ActionButton>
+        type="text" 
+        placeholder="Add Task" 
+        />
+      <button onClick={handleSubmit}>
+        {editingId ? "Update" : "Add"}
+      </button>
 
 
       {todos.map(todo => (
