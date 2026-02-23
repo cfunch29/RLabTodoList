@@ -134,11 +134,13 @@ function reducer(state, action) {
         id: state.length + 1,
         title: action.paylaod
       }
-    ]
+    ];
 
     case 'deleteTask':
+      return; 
 
     case 'updateTask':
+      return;
 
     default: return state;
   }
@@ -146,7 +148,7 @@ function reducer(state, action) {
 
 const Todos = () => {
   const [todos, dispatch] = useReducer(reducer, initialState);
-  const [task, setTask] = useState(1);
+ const [task, setTask] = useState(1);
 
   function handleTask(e) {
     setTask(e.target.value);
@@ -154,12 +156,14 @@ const Todos = () => {
   return (
     <>
       <h1>Create Todo List {todos.length}</h1>
-      Add New Task:
-      <input style={{ fontSize: "2em", fieldSizing: 'content' }}
+      <br />
+      <input style={{ fontSize: "2em"}}
         onChange={handleTask}
-        type="text" />
+        type="text" placeholder="Add Task"/>
       <button type='submit'>Add Task</button>
 
+
+{todos.map(todo => <li key={todo.id}>{todo.title}</li>)}
         <br />
 
         {/* <ActionButton dispatch={dispatch} payload={task} type={"addTask"}>
