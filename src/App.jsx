@@ -136,8 +136,8 @@ function reducer(state, action) {
       }
     ];
 
-    case 'deleteTask':
-      return; 
+    case 'deleteTask': 
+      return state.filter(del => del.id !== action.payload); 
 
     case 'updateTask':
       return;
@@ -166,14 +166,14 @@ const Todos = () => {
 {todos.map(todo => <li key={todo.id}>{todo.title}</li>)}
         <br />
 
-        {/* <ActionButton dispatch={dispatch} payload={task} type={"addTask"}>
+        <ActionButton dispatch={dispatch} payload={task} type={"addTask"}>
           <h2>Add</h2></ActionButton>
-        <h1>{state.count}</h1>
+        {/* <h1>{state.count}</h1>
         <ActionButton dispatch={dispatch} payload={task} type={"deleteTask"}>
           <h2>Delete</h2></ActionButton>
         <br />
         <ActionButton dispatch={dispatch} paylaod={task} type={"updateTask"}>
-          <h2>Update</h2></ActionButton> */}
+          <h2>Update</h2></ActionButton> */} 
       
     </>
   );
