@@ -98,15 +98,18 @@ const initialState = [
 // reducer function 
 function reducer(state, action) {
   switch (action.type) {
+    // add tasks to top of list 
     case 'addTask':
+      if (!action.payload) return state;
+
       return [
-        ...state,
         {
           userId: 1,
-          id: state.length + 1,
+          id: state.length ? state[state.length - 1].id + 1 : 1,
           title: action.paylaod,
           completed: false
-        }
+        },
+        ...state
       ];
 
     case 'deleteTask':
@@ -190,8 +193,15 @@ const Todos = () => {
             >
               {todo.title}
             </span>
-            <ActionButton dispatch={dispatch} action={{ type: "deleteTask", payload: todo.id }}>
+            <ActionButton dispatch={dispatch} 
+            action={{ type: "deleteTask", payload: todo.id }}>
               Delete</ActionButton>
+
+            <button onClick={() => {
+              setTask(todo.title);
+            setEditingId(todo.id);
+            }}
+            >Edit</button>
           </li>
         ))}
       </ul>
