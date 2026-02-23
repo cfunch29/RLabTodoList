@@ -20,3 +20,5 @@
 - If I had more time I would fix the bug that checks all newly created tasks and deletes them. I would also fix the bug that resets the list to include the newly added tasks. 
 
 - For future versions, I would consider adding due dates and formatting if the tasks are past due. 
+
+- I would also add more styling/CSS to make more visually appealing!! 
