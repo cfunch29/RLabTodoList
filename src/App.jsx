@@ -134,16 +134,34 @@ function reducer(state, action) {
 
 const Todos = () => {
   const [todos, dispatch] = useReducer(reducer, initialState);
-  const [task, setTask] = useState(1);
+  const [task, setTask] = useState("");
+  const [editingId, setEditingId] = useState(null);
 
   function handleTask(e) {
     setTask(e.target.value);
+  }
+
+  function handleSubmit() {
+    if (editingId) {
+      dispatch({
+        type: "editTask",
+        paylaod: { id: editingId, title: task}
+      });
+      setEditingId(null);
+    } else {
+      dispatch({
+        type: "addTask",
+        paylaod: task
+      });
+    }
+    setTask("");
   }
   return (
     <>
       <h1>Create Todo List {todos.length}</h1>
       <br />
-      <input style={{ fontSize: "2em" }}
+      <input 
+      style={{ fontSize: "2em" }}
         onChange={handleTask}
         type="text" placeholder="Add Task" />
       <ActionButton dispatch={dispatch} payload={task} type={"addTask"}>
