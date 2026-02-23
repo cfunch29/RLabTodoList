@@ -92,55 +92,32 @@ const initialState = [
     "id": 15,
     "title": "ab voluptatum amet voluptas",
     "completed": true
-  },
-  {
-    "userId": 1,
-    "id": 16,
-    "title": "accusamus eos facilis sint et aut voluptatem",
-    "completed": true
-  },
-  {
-    "userId": 1,
-    "id": 17,
-    "title": "quo laboriosam deleniti aut qui",
-    "completed": true
-  },
-  {
-    "userId": 1,
-    "id": 18,
-    "title": "dolorum est consequatur ea mollitia in culpa",
-    "completed": false
-  },
-  {
-    "userId": 1,
-    "id": 19,
-    "title": "molestiae ipsa aut voluptatibus pariatur dolor nihil",
-    "completed": true
-  },
-  {
-    "userId": 1,
-    "id": 20,
-    "title": "ullam nobis libero sapiente ad optio sint",
-    "completed": true
   }
 ];
 
 // reducer function 
 function reducer(state, action) {
+
+  const todoList = state.map((todo) => {
+    return ()
+  })
   switch (action.type) {
-    case 'addTask': 
-    return [...state,
+    case 'addTask':
+      return [...state,
       {
         id: state.length + 1,
         title: action.paylaod
       }
-    ];
+      ];
 
-    case 'deleteTask': 
-      return state.filter(del => del.id !== action.payload); 
+    case 'deleteTask':
+      return state.filter(del => del.id !== action.payload);
 
-    case 'updateTask':
-      return;
+      case 'editTask':
+      return ;
+
+    case 'resetTodos':
+      return initialState;
 
     default: return state;
   }
@@ -148,7 +125,7 @@ function reducer(state, action) {
 
 const Todos = () => {
   const [todos, dispatch] = useReducer(reducer, initialState);
- const [task, setTask] = useState(1);
+  const [task, setTask] = useState(1);
 
   function handleTask(e) {
     setTask(e.target.value);
@@ -157,24 +134,28 @@ const Todos = () => {
     <>
       <h1>Create Todo List {todos.length}</h1>
       <br />
-      <input style={{ fontSize: "2em"}}
+      <input style={{ fontSize: "2em" }}
         onChange={handleTask}
-        type="text" placeholder="Add Task"/>
-     <ActionButton dispatch={dispatch} payload={task} type={"addTask"}>
-          <h2>Add</h2></ActionButton>
+        type="text" placeholder="Add Task" />
+      <ActionButton dispatch={dispatch} payload={task} type={"addTask"}>
+        Add</ActionButton>
 
 
-{todos.map(todo => <li key={todo.id}>{todo.title}</li>)}
+      {todos.map(todo => (
+        <li key={todo.id}>{todo.title}
+
+      <ActionButton dispatch={dispatch} action={{type: "deleteTask", payload: todo.id }}>
+       Delete</ActionButton>
+       </li>
+       ))}
+      <br />
+       <ActionButton dispatch={dispatch} payload={todos} type={"editTask"}>
+        Edit</ActionButton>
         <br />
+      <button onClick={() => dispatch({ type: "resetTodos", payload: initialState })}>
+      Reset</button>
+<br />
 
-       
-        
-        <ActionButton dispatch={dispatch} payload={task} type={"deleteTask"}>
-          <h2>Delete</h2></ActionButton>
-        <br />
-        <ActionButton dispatch={dispatch} paylaod={task} type={"updateTask"}>
-          <h2>Update</h2></ActionButton> 
-      
     </>
   );
 };

@@ -1,7 +1,7 @@
-export default function ActionButton({children, dispatch, payload, type}){
+export default function ActionButton({ children, dispatch, action }){
     
     function handleClick() {
-        dispatch({ type: type, payload: payload });
+        dispatch({ action });
     }
     
     return <button onClick={handleClick}>{children}</button>
